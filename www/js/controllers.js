@@ -82,7 +82,12 @@ angular.module('starter.controllers', [])
 
 .controller('PerformanceCtrl', function($scope, performanceData){
   $scope.saveData = function(){
-
+    data = {performance_data: {data: {message: person.cooperMessage}}};
+    performanceData.save(data, function(response){
+      console.log(response);
+    }, function(error){
+      console.log(error);
+    })
   };
   $scope.retrieveData = function() {
 

@@ -38,7 +38,6 @@ angular.module('starter.controllers', [])
         .catch(function (error) {
           $scope.errorMessage = error;
         });
-    };
       console.log('Doing login', $scope.loginData);
 
       // Simulate a login delay. Remove this and replace with your login

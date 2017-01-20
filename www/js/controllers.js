@@ -38,12 +38,12 @@ angular.module('starter.controllers', [])
         .then(function (resp) {
           $ionicLoading.hide();
           $scope.closeLogin();
+          console.log(resp)
         })
         .catch(function (error) {
           $ionicLoading.hide();
           $scope.errorMessage = error;
         });
-      console.log('Doing login', $scope.loginData);
 
       // Simulate a login delay. Remove this and replace with your login
       // code if using a login system

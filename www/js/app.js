@@ -4,7 +4,7 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'starter.controllers', 'ng-token-auth']
+angular.module('starter', ['ionic', 'starter.controllers', 'ng-token-auth'])
   .constant('API_URL', 'https://cooper-test-backend.herokuapp.com/api/v1')
 
   .config(function ($authProvider, API_URL) {
@@ -59,5 +59,4 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ng-token-auth']
       });
     // if none of the above states are matched, use this as the fallback
     $urlRouterProvider.otherwise('/app/test');
-  })
-}
+  });

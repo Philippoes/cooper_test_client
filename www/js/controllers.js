@@ -46,6 +46,10 @@ angular.module('starter.controllers', [])
         $scope.closeLogin();
       }, 1000);
     };
+
+    $rootScope.$on('auth:login-success', function(ev,user){
+      $scope.currentUser = user
+    });
   })
 
   .controller('TestController', function ($scope) {

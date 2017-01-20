@@ -31,6 +31,14 @@ angular.module('starter.controllers', [])
 
     // Perform the login action when the user submits the login form
     $scope.doLogin = function () {
+      $auth.submitLogin($scope.loginData)
+        .then(function (resp) {
+          $scope.closeLogin();
+        })
+        .catch(function (error) {
+          $scope.errorMessage = error;
+        });
+    };
       console.log('Doing login', $scope.loginData);
 
       // Simulate a login delay. Remove this and replace with your login
@@ -54,7 +62,7 @@ angular.module('starter.controllers', [])
       value: 1000
     };
     $scope.data = {};
-    $scope.calculateCooper = function() {
+    $scope.calculateCooper = function () {
       var person = new Person({
         gender: $scope.data.gender,
         age: $scope.data.age

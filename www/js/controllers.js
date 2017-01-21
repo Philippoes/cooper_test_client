@@ -52,7 +52,7 @@ angular.module('starter.controllers', [])
       }, 1000);
     };
     $rootScope.$on('auth:login-success', function (ev, user) {
-      $scope.currentUser = user
+      $scope.currentUser = angular.extend(user, $auth.retrieveData('auth_headers'));
     });
   })
 

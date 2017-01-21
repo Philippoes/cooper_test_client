@@ -95,7 +95,7 @@ angular.module('starter.controllers', [])
     }
   })
 
-  .controller('PerformanceCtrl', function ($scope, performanceData, $ionicLoading, $ionicPopup) {
+  .controller('PerformanceCtrl', function ($scope, performanceData, $ionicLoading, $ionicPopup, $state) {
 
     $scope.saveData = function () {
       var data = {performance_data: {data: {message: $scope.person.cooperMessage}}};
@@ -113,6 +113,7 @@ angular.module('starter.controllers', [])
         $scope.showAlert('Failure', error.statusText)
       })
     };
+
     $scope.retrieveData = function () {
       $ionicLoading.show({
         template: "Fetching data..."
@@ -138,7 +139,7 @@ angular.module('starter.controllers', [])
   })
 
   .controller('DataCtrl', function ($scope, $stateParams) {
-    $scope.$on('ionicView.enter', function () {
+    $scope.$on('$ionicView.enter', function () {
       $scope.savedDataCollection = $stateParams.savedDataCollection;
     });
   });

@@ -80,16 +80,35 @@ angular.module('starter.controllers', [])
     }
   })
 
-.controller('PerformanceCtrl', function($scope, performanceData){
+.controller('PerformanceCtrl', function($scope, performanceData, $ionicLoading, $ionicPopup){
+
   $scope.saveData = function(){
-    data = {performance_data: {data: {message: $scope.person.cooperMessage}}};
+    var data = {performance_data: {data: {message: $scope.person.cooperMessage}}};
+    $ionicLoading.show({
+      template: 'Saving data...'
+    });
     performanceData.save(data, function(response){
-      console.log(response);
+      $ionicLoading.hide();
+      $ionicLoading.show({
+        template: (response.message),
+        duration: 1300
+      });
     }, function(error){
-      console.log(error);
+      $ionicLoading.hide();
+      $scope.showAlert('Failure', error.statusText)
     })
   };
   $scope.retrieveData = function() {
 
   };
+
+  $scope.showAlert = function(message, content) {
+    var alertPopup = $ionicPopup.alert({
+      title: message,
+      template: content
+    });
+    alertPopup.then(function(res){
+
+    });
+  }
 });

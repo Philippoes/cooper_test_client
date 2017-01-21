@@ -1,6 +1,6 @@
 angular.module('starter.controllers', [])
 
-  .controller('AppCtrl', function ($rootScope, $scope, $ionicModal, $timeout, $auth, $ionicLoading) {
+  .controller('AppCtrl', function ($rootScope, $scope, $ionicModal, $timeout, $auth, $ionicLoading, $ionicPopup) {
 
     // With the new view caching in Ionic, Controllers are only called
     // when they are recreated or on app start, instead of every page change.
@@ -38,77 +38,92 @@ angular.module('starter.controllers', [])
         .then(function (resp) {
           $ionicLoading.hide();
           $scope.closeLogin();
-          console.log(resp)
+          $ionicLoading.show({
+            template: 'Successfully logged in!',
+            duration: 1000
+          });
         })
         .catch(function (error) {
           $ionicLoading.hide();
           $scope.errorMessage = error;
+          $scope.showAlert('Failure', 'Invalid email or password')
         });
 
-      // Simulate a login delay. Remove this and replace with your login
-      // code if using a login system
-      $timeout(function () {
-        $scope.closeLogin();
-      }, 1000);
-    };
-    $rootScope.$on('auth:login-success', function (ev, user) {
-      $scope.currentUser = angular.extend(user, $auth.retrieveData('auth_headers'));
-    });
-  })
+      $scope.showAlert = function (message, content) {
+        var alertPopup = $ionicPopup.alert({
+          title: message,
+          template: content
+        });
+        alertPopup.then(function (res) {
 
-  .controller('TestController', function ($scope) {
-    $scope.gender = ['Male', 'Female'];
-    $scope.ageValues = {
-      min: 13,
-      max: 60,
-      value: 20
-    };
-    $scope.distanceValues = {
-      min: 1000,
-      max: 3500,
-      value: 1000
-    };
-    $scope.data = {};
-    $scope.calculateCooper = function () {
-      var person = new Person({
-        gender: $scope.data.gender,
-        age: $scope.data.age
+        })
+      };
+
+        // Simulate a login delay. Remove this and replace with your login
+        // code if using a login system
+        $timeout(function () {
+          $scope.closeLogin();
+        }, 1000);
+      };
+      $rootScope.$on('auth:login-success', function (ev, user) {
+        $scope.currentUser = angular.extend(user, $auth.retrieveData('auth_headers'));
       });
-      person.assessCooper($scope.data.distance);
-      $scope.person = person;
-      console.log($scope.person)
     }
-  })
+    )
 
-.controller('PerformanceCtrl', function($scope, performanceData, $ionicLoading, $ionicPopup){
-
-  $scope.saveData = function(){
-    var data = {performance_data: {data: {message: $scope.person.cooperMessage}}};
-    $ionicLoading.show({
-      template: 'Saving data...'
-    });
-    performanceData.save(data, function(response){
-      $ionicLoading.hide();
-      $ionicLoading.show({
-        template: (response.message),
-        duration: 1300
-      });
-    }, function(error){
-      $ionicLoading.hide();
-      $scope.showAlert('Failure', error.statusText)
+    .controller('TestController', function ($scope) {
+      $scope.gender = ['Male', 'Female'];
+      $scope.ageValues = {
+        min: 13,
+        max: 60,
+        value: 20
+      };
+      $scope.distanceValues = {
+        min: 1000,
+        max: 3500,
+        value: 1000
+      };
+      $scope.data = {};
+      $scope.calculateCooper = function () {
+        var person = new Person({
+          gender: $scope.data.gender,
+          age: $scope.data.age
+        });
+        person.assessCooper($scope.data.distance);
+        $scope.person = person;
+        console.log($scope.person)
+      }
     })
-  };
-  $scope.retrieveData = function() {
 
-  };
+    .controller('PerformanceCtrl', function ($scope, performanceData, $ionicLoading, $ionicPopup) {
 
-  $scope.showAlert = function(message, content) {
-    var alertPopup = $ionicPopup.alert({
-      title: message,
-      template: content
+      $scope.saveData = function () {
+        var data = {performance_data: {data: {message: $scope.person.cooperMessage}}};
+        $ionicLoading.show({
+          template: 'Saving data...'
+        });
+        performanceData.save(data, function (response) {
+          $ionicLoading.hide();
+          $ionicLoading.show({
+            template: (response.message),
+            duration: 1000
+          });
+        }, function (error) {
+          $ionicLoading.hide();
+          $scope.showAlert('Failure', error.statusText)
+        })
+      };
+      $scope.retrieveData = function () {
+
+      };
+
+      $scope.showAlert = function (message, content) {
+        var alertPopup = $ionicPopup.alert({
+          title: message,
+          template: content
+        });
+        alertPopup.then(function (res) {
+
+        });
+      }
     });
-    alertPopup.then(function(res){
-
-    });
-  }
-});

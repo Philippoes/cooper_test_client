@@ -114,7 +114,16 @@ angular.module('starter.controllers', [])
         })
       };
       $scope.retrieveData = function () {
-
+        $ionicLoading.show({
+          template: "Fetching data..."
+        });
+        performanceData.query({}, function(response) {
+          $state.go('app.data', {savedDataCollection: response.entries});
+          $ionicLoading.hide();
+        }, function(error){
+          $ionicLoading.hide();
+          $scope.showAlert('Failure', error.statusText);
+        });
       };
 
       $scope.showAlert = function (message, content) {

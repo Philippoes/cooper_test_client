@@ -141,9 +141,9 @@ angular.module('starter.controllers', [])
   .controller('DataCtrl', function ($scope, $stateParams) {
     $scope.$on('$ionicView.enter', function () {
       $scope.savedDataCollection = $stateParams.savedDataCollection;
-      $scope.labels = getLabels($scope.savedDataCollection, label);
+      $scope.labels = getLabels($scope.savedDataCollection);
       $scope.data = [];
-      angular.forEach($scope.labels, function(label){
+      angular.forEach($scope.labels, function (label) {
         $scope.data.push(getCount($scope.savedDataCollection, label));
       });
       $scope.radardata = [$scope.data];
@@ -159,9 +159,9 @@ angular.module('starter.controllers', [])
       return uniqueLabels;
     }
 
-    function getCount(arr, value){
+    function getCount(arr, value) {
       var count = 0;
-      angular.forEach(arr, function(entry){
+      angular.forEach(arr, function (entry) {
         count += entry.data.message == value ? 1 : 0;
       });
       return count;
